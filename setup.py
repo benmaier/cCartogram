@@ -20,13 +20,16 @@ ext_modules = [
         'cCartogram',
         [ 
             'cCartogram/cart.cpp', 
+            'cCartogram/cartogram.cpp', 
             'cCartogram/cCartogram.cpp', 
         ],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "./cCartogram/"
+            "./cCartogram/",
         ],
+        libraries = ['fftw3',],
+        library_dirs = ['/usr/local/lib'],
         language='c++',
     ),
 ]
@@ -79,7 +82,7 @@ class BuildExt(build_ext):
         build_ext.build_extensions(self)
 
 setup(
-    name='pycartogram',
+    name='cCartogram',
     version='0.0.1',
     author='Benjamin F. Maier, Mark Newman',
     author_email='bfmaier@physik.hu-berlin.de',
