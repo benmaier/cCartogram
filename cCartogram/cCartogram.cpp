@@ -31,17 +31,19 @@
 using namespace std;
 namespace py = pybind11;
 
-PYBIND11_PLUGIN(cFlockwork) {
+PYBIND11_PLUGIN(cCartogram) {
     py::module m("cCartogram", "Module to compute Mark Newman's cartograms.");
     
     m.def("compute_cartogram", &compute_cartogram, "Give a matrix of densities and return a matrix of dislocations.",
             py::arg("density")
             );
 
+    /*
     m.def("remap_coordinates", &compute_cartogram, "Get a list of coordinates and remap them according to the computet",
             py::arg("coordinates"),
             py::arg("cartogram_matrix")
             );
+    */
 
 
     return m.ptr();

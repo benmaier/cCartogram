@@ -41,14 +41,11 @@ const double OFFSET = 0.005;
 int readpop(vector < vector < double > > &density, double **rho, int xsize, int ysize)
 {
   int ix,iy;
-  int n;
   double mean;
   double sum=0.0;
 
   for (iy=0; iy<ysize; iy++) {
     for (ix=0; ix<xsize; ix++) {
-      n = fscanf(stream,"%lf",&rho[ix][iy]);
-      if (n!=1) return 1;
       sum += rho[ix][iy];
     }
   }
@@ -79,7 +76,7 @@ void creategrid(double *gridx, double *gridy, int xsize, int ysize)
 }
 
 
-vector < pair < double > >
+vector < pair < double, double > >
      compute_cartogram(
              vector < vector < double > > density
         )
@@ -105,8 +102,8 @@ vector < pair < double > >
 
   /* Create the grid of points */
 
-  gridx = malloc((xsize+1)*(ysize+1)*sizeof(double));
-  gridy = malloc((xsize+1)*(ysize+1)*sizeof(double));
+  gridx = (double *) malloc((xsize+1)*(ysize+1)*sizeof(double));
+  gridy = (double *) malloc((xsize+1)*(ysize+1)*sizeof(double));
   creategrid(gridx,gridy,xsize,ysize);
 
   /* Make the cartogram */
@@ -115,7 +112,7 @@ vector < pair < double > >
 
   /* Write out the final positions of the grid points */
 
-  vector < pair < double > > result;
+  vector < pair < double, double > > result;
 
   for (int i=0; i<xsize*ysize; i++) 
   {

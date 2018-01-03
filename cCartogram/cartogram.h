@@ -36,11 +36,13 @@
 
 using namespace std;
 
-int readpop(vector < vector < double > > &density, double **rho, int xsize, int ysize)
+//extern "C" 
+
+int readpop(vector < vector < double > > &density, double **rho, int xsize, int ysize);
 
 void creategrid(double *gridx, double *gridy, int xsize, int ysize);
 
-vector < pair < double > >
+vector < pair < double, double > >
      compute_cartogram(
              vector < vector < double > > density
         );
