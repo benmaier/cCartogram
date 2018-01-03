@@ -34,7 +34,7 @@ int readpoints(FILE *stream, double **gridx, double **gridy,
 
 #define LINELENGTH 1000
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   int i;
   int xsize,ysize;
