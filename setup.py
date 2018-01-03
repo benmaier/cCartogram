@@ -86,7 +86,7 @@ setup(
     url='https://github.com/benmaier/pycartogram',
     license='BSD',
     description="A python wrapper for Mark Newman's C implementation of the cartogram algorithm.",
-    packages=['pycartogram'],
+    #packages=['pycartogram'],
     long_description='',
     ext_modules=ext_modules,
     install_requires=['pybind11'],
