@@ -32,10 +32,15 @@
 #include <stdexcept>
 #include <vector>
 #include <cmath>
+#include <tuple>
 
 using namespace std;
 
-vector < vector < double > >
+int readpop(vector < vector < double > > &density, double **rho, int xsize, int ysize)
+
+void creategrid(double *gridx, double *gridy, int xsize, int ysize);
+
+vector < pair < double > >
      compute_cartogram(
              vector < vector < double > > density
         );

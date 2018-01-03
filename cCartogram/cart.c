@@ -19,7 +19,7 @@
 #define MAXRATIO 4.0         // Max ratio to increase step size by
 #define EXPECTEDTIME 1.0e8   // Guess as to the time it will take, used to
                              // estimate completion
-
+#define NOPROGRESS
 #define PI 3.1415926535897932384626
 
 /* Globals */
