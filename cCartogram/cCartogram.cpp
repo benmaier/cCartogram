@@ -27,6 +27,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "cartogram.h"
+#include "remap_coordinates.h"
 
 using namespace std;
 namespace py = pybind11;
@@ -34,16 +35,18 @@ namespace py = pybind11;
 PYBIND11_PLUGIN(cCartogram) {
     py::module m("cCartogram", "Module to compute Mark Newman's cartograms.");
     
-    m.def("compute_cartogram", &compute_cartogram, "Give a matrix of densities and return a matrix of dislocations.",
-            py::arg("density")
+    m.def("compute_cartogram", &compute_cartogram, "Give a matrix of densities and return a list of dislocations.",
+            py::arg("density"),
+            py::arg("offset") = 0.005,
+            py::arg("blur") = 0.0
             );
 
-    /*
-    m.def("remap_coordinates", &compute_cartogram, "Get a list of coordinates and remap them according to the computet",
+    m.def("remap_coordinates", &remap_coordinates, "Get a list of coordinates and remap them according to the computed cartogram",
             py::arg("coordinates"),
-            py::arg("cartogram_matrix")
+            py::arg("cartogram"),
+            py::arg("xsize"),
+            py::arg("ysize")
             );
-    */
 
 
     return m.ptr();

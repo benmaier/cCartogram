@@ -62,14 +62,16 @@ vector < pair < double, double > >
   double xin,yin;
   double xout,yout;
   double dx,dy;
-  double **gridx,**gridy;
+  double **gridx = new double*[xsize];
+  double **gridy = new double*[xsize];
 
   /* Read in the grid of points */
 
-  gridx = (double **) malloc((xsize+1)*sizeof(double*));
-  for (int i=0; i<=xsize; i++) gridx[i] = (double *) malloc((ysize+1)*sizeof(double));
-  gridy = (double **) malloc((xsize+1)*sizeof(double*));
-  for (int i=0; i<=xsize; i++) gridy[i] = (double *) malloc((ysize+1)*sizeof(double));
+  for (int i=0; i<=xsize; i++) 
+      gridx[i] = new double[ysize];
+
+  for (int i=0; i<=xsize; i++)
+      gridy[i] = new double[ysize];
   readpoints(cartogram,gridx,gridy,xsize,ysize);
 
   vector < pair < double, double > > result;
@@ -93,6 +95,15 @@ vector < pair < double, double > >
     result.push_back(make_pair(xout,yout));
   }
 
+  for (int i=0; i<=xsize; i++)
+  {
+      delete gridx[i];
+      delete gridy[i];
+  }
+
+  delete gridx;
+  delete gridy;
+    
   return result;
 
 }
