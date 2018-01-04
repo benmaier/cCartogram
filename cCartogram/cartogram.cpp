@@ -81,7 +81,7 @@ vector < pair < double, double > >
   xsize = density.size();
   ysize = density[0].size();
 
-  cout << "xsize = " << xsize << "; ysize = " << ysize << endl;
+  //cout << "xsize = " << xsize << "; ysize = " << ysize << endl;
 
   /* Allocate space for the cartogram code to use */
 
@@ -103,13 +103,13 @@ vector < pair < double, double > >
 
   /* Make the cartogram */
 
-  cart_makecart(gridx,gridy,(xsize+1)*(ysize+1),xsize,ysize,blur);
+  cart_makecart(gridx,gridy,(xsize+1)*(ysize+1),xsize,ysize,blur,show_progress);
 
   /* Write out the final positions of the grid points */
 
   vector < pair < double, double > > result;
 
-  for (int i=0; i<xsize*ysize; i++) 
+  for (int i=0; i<(xsize+1)*(ysize+1); i++)
   {
       result.push_back(make_pair(gridx[i],gridy[i]));
   }

@@ -531,8 +531,8 @@ void cart_makecart(double *pointx, double *pointy, int npoints,
 #endif
     if (show_progress) {
         fprintf(stderr,"  %3i%%  |",done);
-        for (i=0; i<done/2; i++) fprintf(stderr,"=");
-        for (i=done/2; i<50; i++) fprintf(stderr," ");
+        for (int i=0; i<done/2; i++) fprintf(stderr,"=");
+        for (int i=done/2; i<50; i++) fprintf(stderr," ");
         fprintf(stderr,"|\r");
     }
 

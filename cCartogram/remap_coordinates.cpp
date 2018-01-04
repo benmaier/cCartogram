@@ -62,16 +62,17 @@ vector < pair < double, double > >
   double xin,yin;
   double xout,yout;
   double dx,dy;
-  double **gridx = new double*[xsize];
-  double **gridy = new double*[xsize];
+  double **gridx = new double*[xsize+1];
+  double **gridy = new double*[xsize+1];
 
   /* Read in the grid of points */
 
   for (int i=0; i<=xsize; i++) 
-      gridx[i] = new double[ysize];
+  {
+      gridx[i] = new double[ysize+1];
+      gridy[i] = new double[ysize+1];
+  }
 
-  for (int i=0; i<=xsize; i++)
-      gridy[i] = new double[ysize];
   readpoints(cartogram,gridx,gridy,xsize,ysize);
 
   vector < pair < double, double > > result;

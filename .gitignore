@@ -8,7 +8,6 @@ a.out
 *.npy
 *.mexmaci64
 *.m~
-*.dat
 
 /*.egg-info/
 /build/

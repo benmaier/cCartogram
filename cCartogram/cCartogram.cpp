@@ -38,7 +38,8 @@ PYBIND11_PLUGIN(cCartogram) {
     m.def("compute_cartogram", &compute_cartogram, "Give a matrix of densities and return a list of dislocations.",
             py::arg("density"),
             py::arg("offset") = 0.005,
-            py::arg("blur") = 0.0
+            py::arg("blur") = 0.0,
+            py::arg("show_progress") = false
             );
 
     m.def("remap_coordinates", &remap_coordinates, "Get a list of coordinates and remap them according to the computed cartogram",
