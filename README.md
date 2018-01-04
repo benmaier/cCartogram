@@ -1,4 +1,4 @@
-# pycartogram
+# cCartogram
 
 A python wrapper for Mark Newman's C-library to compute cartograms 
 using the method by
@@ -29,7 +29,11 @@ cd fftw-3.3.7
 sudo make install
 ```
 
-### Matlab (Mac OSX)
+### Python
+
+    $ sudo pip install ./pycartogram
+
+### Not yet implemented: Matlab (Mac OSX)
 
 You need to have the current XCode version installed (free in AppStore). Open Matlab and change into the directory of the repository. At first, there's two files you need to change.
 
@@ -47,8 +51,3 @@ Now, run
 ```matlab
 >>> setup
 ```
-
-### Python
-
-    $ sudo pip install ./pycartogram
-
