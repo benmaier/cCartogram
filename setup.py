@@ -21,6 +21,7 @@ ext_modules = [
         [ 
             'cCartogram/cart.cpp', 
             'cCartogram/cartogram.cpp', 
+            'cCartogram/remap_coordinates.cpp', 
             'cCartogram/cCartogram.cpp', 
         ],
         include_dirs=[
