@@ -32,7 +32,7 @@ ext_modules = [
         libraries = ['fftw3', 'm'],
         library_dirs = ['/usr/local/lib'],
         language='c++',
-        extra_compile_args = ["-O"], 
+        extra_compile_args = ["-O3"], 
     ),
 ]
 
@@ -86,7 +86,7 @@ class BuildExt(build_ext):
 setup(
     name='cCartogram',
     version='0.0.1',
-    author='Benjamin F. Maier, Mark Newman',
+    author='Benjamin F. Maier',
     author_email='bfmaier@physik.hu-berlin.de',
     url='https://github.com/benmaier/pycartogram',
     license='BSD',
