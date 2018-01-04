@@ -1,6 +1,6 @@
 /* Routines to transform a given set of points to a Gastner-Newman cartogram
  *
- * Written by Mark Newman
+ * Written by Mark Newman, modified by Benjamin Maier
  *
  * See http://www.umich.edu/~mejn/ for further details.
  */
@@ -19,7 +19,6 @@
 #define MAXRATIO 4.0         // Max ratio to increase step size by
 #define EXPECTEDTIME 1.0e8   // Guess as to the time it will take, used to
                              // estimate completion
-#define NOPROGRESS
 #define PI 3.1415926535897932384626
 
 /* Globals */
@@ -486,7 +485,7 @@ int cart_complete(double t)
  * to the cartogram */
 
 void cart_makecart(double *pointx, double *pointy, int npoints,
-		   int xsize, int ysize, double blur)
+		   int xsize, int ysize, double blur, bool show_progress)
 {
   int s,sp;
   int step;
@@ -530,12 +529,12 @@ void cart_makecart(double *pointx, double *pointy, int npoints,
 #ifdef PERCENT
     fprintf(stdout,"%i\n",done);
 #endif
-#ifndef NOPROGRESS
-    fprintf(stderr,"  %3i%%  |",done);
-    for (i=0; i<done/2; i++) fprintf(stderr,"=");
-    for (i=done/2; i<50; i++) fprintf(stderr," ");
-    fprintf(stderr,"|\r");
-#endif
+    if (show_progress) {
+        fprintf(stderr,"  %3i%%  |",done);
+        for (i=0; i<done/2; i++) fprintf(stderr,"=");
+        for (i=done/2; i<50; i++) fprintf(stderr," ");
+        fprintf(stderr,"|\r");
+    }
 
     /* If no point moved then we are finished */
 
@@ -544,7 +543,6 @@ void cart_makecart(double *pointx, double *pointy, int npoints,
 #ifdef PERCENT
   fprintf(stdout,"\n");
 #endif
-#ifndef NOPROGRESS
-  fprintf(stderr,"  100%%  |==================================================|\n");
-#endif
+  if (show_progress)
+      fprintf(stderr,"  100%%  |==================================================|\n");
 }

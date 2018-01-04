@@ -1,6 +1,6 @@
-/* Header file for cartogram.c
+/* Header file for cart.cpp
  *
- * Written by Mark Newman
+ * Written by Mark Newman, modified by Benjamin Maier
  *
  * See http://www.umich.edu/~mejn/ for further details.
  */
@@ -14,6 +14,6 @@ void cart_makews(int xsize, int ysize);
 void cart_freews(int xsize, int ysize);
 void cart_transform(double **userrho, int xsize, int ysize);
 void cart_makecart(double *pointx, double *pointy, int npoints,
-		   int xsize, int ysize, double blur);
+		   int xsize, int ysize, double blur, bool show_progress);
 
 #endif
