@@ -35,6 +35,7 @@ int readpop(vector < vector < double > > &density, double **rho, int xsize, int 
 
   for (iy=0; iy<ysize; iy++) {
     for (ix=0; ix<xsize; ix++) {
+      rho[ix][iy] = density[ix][iy];
       sum += rho[ix][iy];
     }
   }
@@ -69,7 +70,8 @@ vector < pair < double, double > >
      compute_cartogram(
              vector < vector < double > > density,
              double offset,
-             double blur
+             double blur,
+             bool show_progress
         )
 {
   int xsize,ysize;
