@@ -4,6 +4,40 @@ A python wrapper for Mark Newman's C-library to compute cartograms
 using the method by
 [Gastner and Newman (2004)](http://www.pnas.org/cgi/content/abstract/101/20/7499]).
 
+Make sure to check out the [web site of the original code](http://www-personal.umich.edu/~mejn/cart/).
+
+
+## Examples
+
+Find an example below. For more examples, check out the `sandbox` subfolder
+where you can find a script for the `uspop` sample from the original repository.
+
+```python
+import numpy as np
+import cCartogram as cart
+
+xsize = 128
+ysize = 128
+
+# random density matrix
+A = np.random.randn(xsize,ysize) + 3
+
+# compute cartogram
+cartogram = cart.compute_cartogram(A.tolist())
+
+# let's transform some coordinates
+old_coords = [ (3.5, 5.),
+               (64., 99.)
+             ]
+# those have to be a list of tuples of floats!
+
+new_coords = cart.remap_coordinates(old_coords,
+                                    cartogram,
+                                    xsize,
+                                    ysize
+                                    )
+```
+
 ## Install
 
 For all systems, first clone this repository.
