@@ -1,66 +1,52 @@
-/* 
- * The MIT License (MIT)
- * Copyright (c) 2018, Mark Newman, Benjamin Maier
+/* Routines to use the transformation functions given in cart.cpp
  *
- * Permission is hereby granted, free of charge, to any person 
- * obtaining a copy of this software and associated documentation 
- * files (the "Software"), to deal in the Software without 
- * restriction, including without limitation the rights to use, 
- * copy, modify, merge, publish, distribute, sublicense, and/or 
- * sell copies of the Software, and to permit persons to whom the 
- * Software is furnished to do so, subject to the following conditions:
+ * Written by and copyright (c) Mark Newman, modified, with permission, by Benjamin F. Maier
  *
- * The above copyright notice and this permission notice shall 
- * be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-
- * INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS 
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
- * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
- * IN THE SOFTWARE.
+ * See http://www.umich.edu/~mejn/ for further details.
  */
+
 
 #include "cartogram.h"
 
 using namespace std;
 
-int readpop(vector < vector < double > > &density, double **rho, int xsize, int ysize, double offset)
+void cast_density(vector < vector < double > > &density,
+                  double **rho,
+                  int xsize,
+                  int ysize,
+                  double offset)
 {
-  int ix,iy;
-  double mean;
-  double sum=0.0;
+  double mean = 0.;
+  double sum = 0.;
 
-  for (iy=0; iy<ysize; iy++) {
-    for (ix=0; ix<xsize; ix++) {
-      rho[ix][iy] = density[ix][iy];
-      sum += rho[ix][iy];
+  for (int i=0; i<ysize; i++) {
+    for (int j=0; j<xsize; j++) {
+      rho[i][j] = density[i][j];
+      sum += rho[i][j];
     }
   }
 
-  mean = sum/(xsize*ysize);
-  for (iy=0; iy<ysize; iy++) {
-    for (ix=0; ix<xsize; ix++) {
+  mean = sum / (xsize*ysize);
+  for (int i = 0; i<ysize; i++) {
+    for (int j = 0; j<xsize; j++) {
       rho[ix][iy] += offset*mean;
     }
   }
-
-  return 0;
 }
 
 
-void creategrid(double *gridx, double *gridy, int xsize, int ysize)
+void create_grids(double *gridx,
+                  double *gridy,
+                  int xsize,
+                  int ysize)
 {
-  int ix,iy;
-  int i = 0;
+  int count = 0;
 
-  for (iy=0; iy<=ysize; iy++) {
-    for (ix=0; ix<=xsize; ix++) {
-      gridx[i] = ix;
-      gridy[i] = iy;
-      i++;
+  for (int i = 0; i<=ysize; i++) {
+    for (int j = 0; j<=xsize; j++) {
+      gridx[count] = i;
+      gridy[count] = j;
+      count++;
     }
   }
 }
@@ -75,8 +61,8 @@ vector < pair < double, double > >
         )
 {
   int xsize,ysize;
-  double *gridx,*gridy;  // Array for grid points
-  double **rho;          // Initial population density
+  double *gridx,*gridy;
+  double **rho;
 
   xsize = density.size();
   ysize = density[0].size();
@@ -90,7 +76,7 @@ vector < pair < double, double > >
   /* Read in the population data, transform it, then destroy it again */
 
   rho = cart_dmalloc(xsize,ysize);
-  readpop(density,rho,xsize,ysize,offset);
+  cast_density(density,rho,xsize,ysize,offset);
 
   cart_transform(rho,xsize,ysize);
   cart_dfree(rho);
@@ -99,11 +85,17 @@ vector < pair < double, double > >
 
   gridx = (double *) malloc((xsize+1)*(ysize+1)*sizeof(double));
   gridy = (double *) malloc((xsize+1)*(ysize+1)*sizeof(double));
-  creategrid(gridx,gridy,xsize,ysize);
+  create_grids(gridx,gridy,xsize,ysize);
 
   /* Make the cartogram */
 
-  cart_makecart(gridx,gridy,(xsize+1)*(ysize+1),xsize,ysize,blur,show_progress);
+  cart_makecart(gridx,
+                gridy,
+                (xsize+1)*(ysize+1),
+                xsize,
+                ysize,
+                blur,
+                show_progress);
 
   /* Write out the final positions of the grid points */
 

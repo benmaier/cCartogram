@@ -1,6 +1,6 @@
 /* Header file for cart.cpp
  *
- * Written by Mark Newman, modified by Benjamin Maier
+ * Written by and copyright (c) Mark Newman, modified, with permission, by Benjamin F. Maier
  *
  * See http://www.umich.edu/~mejn/ for further details.
  */

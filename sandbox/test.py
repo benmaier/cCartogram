@@ -1,8 +1,32 @@
+# The MIT License (MIT)
+# Copyright (c) 2018 Benjamin Maier
+# 
+# Permission is hereby granted, free of charge, to any person 
+# obtaining a copy of this software and associated documentation 
+# files (the "Software"), to deal in the Software without 
+# restriction, including without limitation the rights to use, 
+# copy, modify, merge, publish, distribute, sublicense, and/or 
+# sell copies of the Software, and to permit persons to whom the 
+# Software is furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall 
+# be included in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-
+# INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS 
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
+# AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+# OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
+# IN THE SOFTWARE.
+
 import numpy as np
 import matplotlib.pyplot as pl
 
-import cCartogram
+import cCartogram as cart
 
+# dimensions of the input matrix
 xsize = 128
 ysize = 128
 
@@ -62,12 +86,12 @@ for x,y in lines:
     ax[0].plot(x,y,'k')
 
 # generate cartograms
-cartogram = cCartogram.compute_cartogram(bigA.tolist(),offset=0.005,blur=5,show_progress=True)
+cartogram = cart.compute_cartogram(bigA.tolist(),offset=0.005,blur=5,show_progress=True)
 
 # transform lines according to cartogram
 for x,y in lines:
     coo = zip(x,y)
-    coords = cCartogram.remap_coordinates(coo,cartogram,xsize,ysize)
+    coords = cart.remap_coordinates(coo,cartogram,xsize,ysize)
     x = [c[0] for c in coords]
     y = [c[1] for c in coords]
     ax[1].plot(x,y,'r')

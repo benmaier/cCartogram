@@ -35,14 +35,14 @@ namespace py = pybind11;
 PYBIND11_PLUGIN(cCartogram) {
     py::module m("cCartogram", "Module to compute Mark Newman's cartograms.");
     
-    m.def("compute_cartogram", &compute_cartogram, "Give a matrix of densities and return a list of dislocations.",
+    m.def("compute_cartogram", &compute_cartogram, "Give a matrix (read: list of lists of floats) of density values and return a list of dislocations (x,y).",
             py::arg("density"),
             py::arg("offset") = 0.005,
             py::arg("blur") = 0.0,
             py::arg("show_progress") = false
             );
 
-    m.def("remap_coordinates", &remap_coordinates, "Get a list of coordinates and remap them according to the computed cartogram",
+    m.def("remap_coordinates", &remap_coordinates, "Give a list of coordinates (read: list of tuples of two floats) and remap them according to the computed cartogram.",
             py::arg("coordinates"),
             py::arg("cartogram"),
             py::arg("xsize"),
