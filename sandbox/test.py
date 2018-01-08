@@ -78,8 +78,8 @@ lines = [ (i*const_coord-0.5,incre_coord-0.5) for i in range(1,4) ] +\
 # show density matrix (transposed because
 # otherwise matplotlib would not figure out the right coordinate system
 fig, ax = pl.subplots(1,2,figsize=(8,4))
-ax[0].imshow(bigA.T)
-ax[1].imshow(bigA.T)
+ax[0].imshow(bigA.T,origin='lower')
+ax[1].imshow(bigA.T,origin='lower')
 
 # plot lines
 for x,y in lines:
