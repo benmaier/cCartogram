@@ -1,5 +1,34 @@
+# License notice for cCartogram
+
+## Original source code of program 'cart'
+
+The core of the package is the original source code of the program `cart`
+by Mark Newman, see http://www-personal.umich.edu/~mejn/cart/ , consisting of
+the following files
+
+* cCartogram/cart.h
+* cCartogram/cart.cpp
+* cCartogram/cartogram.cpp
+* cCartogram/cartogram.h
+* cCartogram/remap_coordinates.h
+* cCartogram/remap_coordinates.cpp
+* sandbox/uspop.dat
+
+All of these files were edited with permission of the original author and
+are still under his copyright. 
+
+## Wrapping and examples
+
+All other files
+
+* cCartogram/cCartogram.cpp
+* sandbox/test.py
+* sandbox/test_uspop.py
+
+were written by B. F. Maier and are licensed with the MIT license as described below.
+
 The MIT License (MIT)
-Copyright (c) 2018 Benjamin Maier
+Copyright (c) 2018 Benjamin F. Maier
 
 Permission is hereby granted, free of charge, to any person 
 obtaining a copy of this software and associated documentation 
