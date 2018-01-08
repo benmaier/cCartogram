@@ -1,6 +1,6 @@
 # cCartogram
 
-A python wrapper for Mark Newman's C-library to compute cartograms 
+A Python wrapper for Mark Newman's C-library to compute cartograms 
 using the method by
 [Gastner and Newman (2004)](http://www.pnas.org/cgi/content/abstract/101/20/7499]).
 
