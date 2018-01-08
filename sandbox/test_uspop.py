@@ -48,7 +48,7 @@ def get_edges(A):
 # load transposed data from file and plot
 A = np.loadtxt('uspop.dat').T
 fig, ax = pl.subplots(2,1,figsize=(5,5))
-ax[0].imshow(np.log(A).T)
+ax[0].imshow(np.log(A).T,origin='lower')
 
 # compute roughly coordinates of edges
 coordinates = get_edges(A)
@@ -74,7 +74,7 @@ x = [ c[0] for c in new_coords ]
 y = [ c[1] for c in new_coords ]
 
 # plot old density and transformed result 
-ax[1].imshow(np.log(A).T)
+ax[1].imshow(np.log(A).T,origin='lower')
 ax[1].plot(x,y,'o',markersize=0.5,color='k')
 
 # get bounds
