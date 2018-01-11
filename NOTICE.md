@@ -24,6 +24,9 @@ All other files
 * cCartogram/cCartogram.cpp
 * sandbox/test.py
 * sandbox/test_uspop.py
+* sandbox/matlab_matrix_test.m
+* sandbox/matlab_uspop.m
+* matlab/*
 
 were written by B. F. Maier and are licensed with the MIT license as described below.
 
