@@ -33,7 +33,7 @@ vector < pair < double, double > > get_edgelist(const mxArray * m_edges)
 
         for(size_t x=0; x<dimx; x++)
         {
-            size_t p[dimy];
+            double p[dimy];
  
             for(size_t y=0; y<dimy; y++)
                 p[y] = m_edgelist[x+y*dimx];
@@ -55,15 +55,15 @@ vector < pair < double, double > > get_edgelist(const mxArray * m_edges)
 
 }
 
-vector < vector < double > > get_matrix(const mxArray * m_edges)
+vector < vector < double > > get_matrix(const mxArray * m_)
 {
-    double *m_edgelist;
+    double *m_new;
     size_t numdims, dimx, dimy;
     const mwSize *dims;
 
-    m_edgelist = mxGetPr(m_edges);
-    dims = mxGetDimensions(m_edges);
-    numdims = mxGetNumberOfDimensions(m_edges);
+    m_new = mxGetPr(m_);
+    dims = mxGetDimensions(m_);
+    numdims = mxGetNumberOfDimensions(m_);
     dimx = int( dims[0] );
     dimy = int( dims[1] );
 
@@ -77,16 +77,16 @@ vector < vector < double > > get_matrix(const mxArray * m_edges)
 
     if (dimx>0)
     {
-        if (dimy != 2)
+        if (dimy < 2)
         {
-            mexPrintf("Wrong dimensions in edgelist: [%d,%d]\n",dimx,dimy);
+            mexPrintf("Wrong dimensions in matrix: [%d,%d]\n",dimx,dimy);
             throw length_error("");
         }
 
         for(size_t x=0; x<dimx; x++)
         {
             for(size_t y=0; y<dimy; y++)
-                A[x].push_back( m_edgelist[x+y*dimx] );
+                A[x][y] = m_new[x+y*dimx] ;
         }
 
         return A;

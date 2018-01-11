@@ -9,6 +9,7 @@ using namespace std;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     double offset, blur;
+    bool show_progress = false;
     
     if (nrhs!=3)
     {
@@ -30,7 +31,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
          coords = compute_cartogram(
                                         density,
                                         offset,
-                                        blur
+                                        blur,
+                                        show_progress
                                       );
 
     plhs[0] = cast_edgelist_to_matlab(coords.begin(), coords.end());

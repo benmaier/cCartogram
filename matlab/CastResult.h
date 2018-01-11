@@ -46,7 +46,7 @@
 using namespace std;
 
 vector < pair<double,double> > get_edgelist(const mxArray *m_edges);
-vector < vector < double > > get_matrix(const mxArray * m_edges);
+vector < vector < double > > get_matrix(const mxArray * m_);
 
 template < class fwditer >
 mxArray * cast_edgelist_to_matlab( fwditer begin, fwditer end )
@@ -61,8 +61,8 @@ mxArray * cast_edgelist_to_matlab( fwditer begin, fwditer end )
     size_t index = 0;
     while (current_pair != end) 
     {
-        r[index] = (double) (*current_pair).first + 1;
-        r[index+len_container] = (double) (*current_pair).second + 1;
+        r[index] = (double) (*current_pair).first;
+        r[index+len_container] = (double) (*current_pair).second;
 
         current_pair++;
         index++;

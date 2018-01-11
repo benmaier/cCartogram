@@ -27,7 +27,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     read_single_value(prhs[2],xsize);
     read_single_value(prhs[3],ysize);
-    vector < pair < double, double > > > 
+    vector < pair < double, double > >  
          coords = remap_coordinates(
                                         coordinates,
                                         cartogram,
