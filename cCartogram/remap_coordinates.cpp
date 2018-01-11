@@ -20,8 +20,8 @@ void cast_grids(
 {
   size_t count = 0;
 
-  for (int i = 0; i <= ysize; i++) {
-    for (int j = 0; j <= xsize; j++) {
+  for (int j = 0; j <= ysize; j++) {
+    for (int i = 0; i <= xsize; i++) {
         gridx[i][j] = cartogram[count].first;
         gridy[i][j] = cartogram[count].second;
         ++count;
@@ -48,6 +48,18 @@ vector < pair < double, double > >
       gridy[i] = new double[ysize+1];
   }
 
+  /*
+  double **gridx;
+  double **gridy;
+  gridx = (double **) malloc((xsize+1)*sizeof(double*));
+  gridy = (double **) malloc((xsize+1)*sizeof(double*));
+  for (i=0; i<=xsize; i++)
+  { 
+      gridx[i] = (double *) malloc((ysize+1)*sizeof(double));
+      gridy[i] = (double *) malloc((ysize+1)*sizeof(double));
+  }
+  */
+
   cast_grids(cartogram,gridx,gridy,xsize,ysize);
 
   vector < pair < double, double > > result;
@@ -61,9 +73,9 @@ vector < pair < double, double > >
         throw domain_error("received a coordinate which is out of bounds"); 
     } else {
       int ix = xin;
-      int dx = xin - ix;
+      double dx = xin - ix;
       int iy = yin;
-      int dy = yin - iy;
+      double dy = yin - iy;
       xout = (1-dx)*(1-dy)*gridx[ix][iy] + dx*(1-dy)*gridx[ix+1][iy]
            + (1-dx)*dy*gridx[ix][iy+1] + dx*dy*gridx[ix+1][iy+1];
       yout = (1-dx)*(1-dy)*gridy[ix][iy] + dx*(1-dy)*gridy[ix+1][iy]
@@ -72,14 +84,15 @@ vector < pair < double, double > >
     result.push_back(make_pair(xout,yout));
   }
 
-  for (int i=0; i<=xsize; i++)
+  for (int i=0; i<xsize+1; i++)
   {
-      delete gridx[i];
-      delete gridy[i];
+      delete [] gridx[i];
+      delete [] gridy[i];
+      //free(gridx[i]);
   }
 
-  delete gridx;
-  delete gridy;
+  delete [] gridx;
+  delete [] gridy;
     
   return result;
 

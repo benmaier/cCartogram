@@ -19,16 +19,16 @@ void cast_density(vector < vector < double > > &density,
   double mean = 0.;
   double sum = 0.;
 
-  for (int i=0; i<ysize; i++) {
-    for (int j=0; j<xsize; j++) {
+  for (int i=0; i<xsize; i++) {
+    for (int j=0; j<ysize; j++) {
       rho[i][j] = density[i][j];
       sum += rho[i][j];
     }
   }
 
   mean = sum / (xsize*ysize);
-  for (int i = 0; i<ysize; i++) {
-    for (int j = 0; j<xsize; j++) {
+  for (int i = 0; i<xsize; i++) {
+    for (int j = 0; j<ysize; j++) {
       rho[i][j] += offset*mean;
     }
   }
@@ -42,8 +42,8 @@ void create_grids(double *gridx,
 {
   int count = 0;
 
-  for (int i = 0; i<=ysize; i++) {
-    for (int j = 0; j<=xsize; j++) {
+  for (int j = 0; j<=ysize; j++) {
+    for (int i = 0; i<=xsize; i++) {
       gridx[count] = i;
       gridy[count] = j;
       count++;
