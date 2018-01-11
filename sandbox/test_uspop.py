@@ -66,9 +66,11 @@ ax[0].set_xlim(xlim)
 ax[0].set_ylim(ylim[::-1])
 
 # compute cartogram
+print "computing cartogram ..."
 cartogram = cart.compute_cartogram(A.tolist(),show_progress=True)
 
 # remap the edge coordinates
+print "remapping coordinates ..."
 new_coords = cart.remap_coordinates(coordinates,cartogram,*A.shape)
 x = [ c[0] for c in new_coords ]
 y = [ c[1] for c in new_coords ]
