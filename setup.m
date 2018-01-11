@@ -1,9 +1,13 @@
 % use C++ in the following
 mex -setup C++;
 
+% fftw3path = fileread('./FFTW3PATH')
+% fftwlib = ['fftw3path','/lib']
+% fftwinclude = ['fftw3path','/lib']
+
 % compile function
-mex -v CXXFLAGS='-O3 -std=c++11 -stdlib=libc++ -I./cCartogram -I./matlab -L/usr/local/lib -lfftw3' matlab/cartogram_compute.cpp matlab/CastResult.cpp cCartogram/cartogram.cpp cCartogram/cart.cpp 
-mex -v CXXFLAGS='-O3 -std=c++11 -stdlib=libc++ -I./cCartogram -I./matlab -L/usr/local/lib -lfftw3' matlab/cartogram_remap_coordinates.cpp matlab/CastResult.cpp cCartogram/remap_coordinates.cpp cCartogram/cart.cpp 
+mex -v -I/usr/local/include -L/usr/local/lib -lfftw3 CXXFLAGS='-O3 -std=c++11 -stdlib=libc++ -I./cCartogram -I./matlab' matlab/cartogram_compute.cpp matlab/CastResult.cpp cCartogram/cartogram.cpp cCartogram/cart.cpp
+mex -v -I/usr/local/include -L/usr/local/lib -lfftw3 CXXFLAGS='-O3 -std=c++11 -stdlib=libc++ -I./cCartogram -I./matlab' matlab/cartogram_remap_coordinates.cpp matlab/CastResult.cpp cCartogram/remap_coordinates.cpp
 
 % move compiled functions to new folder
 mkdir matlabbuild
