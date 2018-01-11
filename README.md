@@ -1,13 +1,14 @@
 # cCartogram
 
-A Python wrapper for Mark Newman's C-library to compute cartograms 
+Python and MATLAB wrappers for Mark Newman's C-library to compute cartograms 
 using the method by
 [Gastner and Newman (2004)](http://www.pnas.org/cgi/content/abstract/101/20/7499]).
 
 Make sure to check out the [web site of the original code](http://www-personal.umich.edu/~mejn/cart/).
 
-
 ## Examples
+
+### Python
 
 Find an example below. For more examples, check out the `sandbox` subfolder
 where you can find a script for the `uspop` sample from the original repository.
@@ -36,7 +37,9 @@ new_coords = cart.remap_coordinates(old_coords,
                                     xsize,
                                     ysize
                                     )
-```
+### MATLAB
+
+Check out the examples in `sandbox`.
 
 ## Install
 
