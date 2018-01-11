@@ -37,6 +37,8 @@ new_coords = cart.remap_coordinates(old_coords,
                                     xsize,
                                     ysize
                                     )
+```
+
 ### MATLAB
 
 Check out the examples in `sandbox`.
