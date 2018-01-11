@@ -28,6 +28,7 @@ ext_modules = [
             get_pybind_include(),
             get_pybind_include(user=True),
             "./cCartogram/",
+            "/usr/local/include",
         ],
         libraries = ['fftw3', 'm'],
         library_dirs = ['/usr/local/lib'],
