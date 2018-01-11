@@ -63,11 +63,14 @@ cd fftw-3.3.7
 sudo make install
 ```
 
+
 ### Python
 
     $ sudo pip install ./pycartogram
 
-### Not yet implemented: Matlab (Mac OSX)
+If your compiler has trouble finding the library `fftw3` please note that you have to add both the include and library paths to `setup.py`. I've added `/usr/local/include` and `/usr/local/lib` since those are my standard library paths. If this is different on your machine you have to add the paths to the `include_dirs` and `library_dirs` arguments in lines `27-34` of `setup.py`.
+
+### Matlab (Mac OSX)
 
 You need to have the current XCode version installed (free in AppStore). Open Matlab and change into the directory of the repository. At first, there's two files you need to change.
 
@@ -79,8 +82,9 @@ You need to have the current XCode version installed (free in AppStore). Open Ma
 
 In both files, copy lines matching occurences of `MacOSX10.x.sdk` and change `MacOSX10.x.sdk` to `MacOSX10.11.sdk`(or whichever current version of XCode you're using).
 
-Now, run
+Furthermore, it's important to know where your `fftw3` library was installed to. For me it's `/usr/local/lib` and `/usr/local/include`, so those are added as flags for MATLAB's compiling tool `mex` in `setup.m`. If those paths are different for you, please change them in lines `9-10` of `setup.m`.
 
+Now, run
 
 ```matlab
 >>> setup
