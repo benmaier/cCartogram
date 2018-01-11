@@ -29,7 +29,7 @@ void cast_density(vector < vector < double > > &density,
   mean = sum / (xsize*ysize);
   for (int i = 0; i<ysize; i++) {
     for (int j = 0; j<xsize; j++) {
-      rho[ix][iy] += offset*mean;
+      rho[i][j] += offset*mean;
     }
   }
 }

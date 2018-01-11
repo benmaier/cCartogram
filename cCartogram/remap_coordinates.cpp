@@ -37,10 +37,6 @@ vector < pair < double, double > >
              int ysize
         )
 {
-  int ix,iy;
-  double xin,yin;
-  double xout,yout;
-  double dx,dy;
   double **gridx = new double*[xsize+1];
   double **gridy = new double*[xsize+1];
 
@@ -58,8 +54,9 @@ vector < pair < double, double > >
 
   for(int i = 0; i < coordinates.size(); i++)
   {
-    xin = coordinates[i].first;
-    yin = coordinates[i].second;
+    double xin = coordinates[i].first;
+    double yin = coordinates[i].second;
+    double xout, yout;
     if ((xin<0.0)||(xin>=xsize)||(yin<0.0)||(yin>=ysize)) {
         throw domain_error("received a coordinate which is out of bounds"); 
     } else {
@@ -67,10 +64,10 @@ vector < pair < double, double > >
       int dx = xin - ix;
       int iy = yin;
       int dy = yin - iy;
-      int xout = (1-dx)*(1-dy)*gridx[ix][iy] + dx*(1-dy)*gridx[ix+1][iy]
-               + (1-dx)*dy*gridx[ix][iy+1] + dx*dy*gridx[ix+1][iy+1];
-      int yout = (1-dx)*(1-dy)*gridy[ix][iy] + dx*(1-dy)*gridy[ix+1][iy]
-               + (1-dx)*dy*gridy[ix][iy+1] + dx*dy*gridy[ix+1][iy+1];
+      xout = (1-dx)*(1-dy)*gridx[ix][iy] + dx*(1-dy)*gridx[ix+1][iy]
+           + (1-dx)*dy*gridx[ix][iy+1] + dx*dy*gridx[ix+1][iy+1];
+      yout = (1-dx)*(1-dy)*gridy[ix][iy] + dx*(1-dy)*gridy[ix+1][iy]
+           + (1-dx)*dy*gridy[ix][iy+1] + dx*dy*gridy[ix+1][iy+1];
     }
     result.push_back(make_pair(xout,yout));
   }
