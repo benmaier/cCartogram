@@ -71,7 +71,11 @@ cart = cartogram_compute(A,offset,blur);
 
 % transform to new coordinates
 [xsize, ysize] = size(A);
-new_coords = cartogram_remap_coordinates(edges-1,cart,xsize,ysize);
+
+% matlab matrix coordinates start at 1 while
+% the cartogram algorithm starts at 0
+% hence we have to shift the coordinates by 1
+new_coords = cartogram_remap_coordinates(edges-1,cart,xsize,ysize) + 1;
 
 % plot new coordinates
 plot(new_coords(:,1),new_coords(:,2),'d','MarkerSize',1)
