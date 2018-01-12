@@ -25,8 +25,6 @@ void cast_grids(
            int ysize
            );
 
-int get_linear_index(int ix,int iy, int xsize);
-
 vector < pair < double, double > >
      remap_coordinates(
              vector < pair < double, double > > coordinates,             
