@@ -41,6 +41,42 @@ new_coords = cart.remap_coordinates(old_coords,
 
 ### MATLAB
 
+```matlab
+% generating a density matrix
+A = ones(100,200);
+
+% setting some rectangular density values
+A(20:30,20:80) = 0.01;
+A(31:50,30:70) = 1.1;
+A(51:70,20:80) = 1.99;
+
+% computing borders
+xdiff = A(2:end,1:end) - A(1:(end-1),1:end);
+ydiff = A(1:end,2:end) - A(1:end,1:(end-1));
+
+[rowx, colx] = find(xdiff);
+[rowy, coly] = find(ydiff);
+
+edges = [rowx, colx; rowy, coly];
+
+% plot
+imagesc(log(A.'))
+hold on;
+plot(edges(:,1),edges(:,2),'.','MarkerSize',0.1) 
+
+% compute cartogram
+offset = 0;
+blur = 0;
+cart = cartogram_compute(A,offset,blur);
+
+% transform to new coordinates
+[xsize, ysize] = size(A);
+new_coords = cartogram_remap_coordinates(edges-1,cart,xsize,ysize);
+
+% plot new coordinates
+plot(new_coords(:,1),new_coords(:,2),'d','MarkerSize',1)
+```
+
 Check out the examples in `sandbox`.
 
 ## Install
