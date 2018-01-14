@@ -120,9 +120,9 @@ If your compiler has trouble finding the library `fftw3` please note that you ha
 You need to have the current XCode version installed (free in AppStore). Open Matlab and change into the directory of the repository. At first, there's two files you need to change.
 
 ```matlab
->>> cd /path/to/repository
->>> edit ([matlabroot '/bin/maci64/mexopts/clang++_maci64.xml'])
->>> edit ([matlabroot '/bin/maci64/mexopts/clang_maci64.xml'])
+>> cd /path/to/repository
+>> edit ([matlabroot '/bin/maci64/mexopts/clang++_maci64.xml'])
+>> edit ([matlabroot '/bin/maci64/mexopts/clang_maci64.xml'])
 ```
 
 In both files, copy lines matching occurences of `MacOSX10.x.sdk` and change `MacOSX10.x.sdk` to `MacOSX10.11.sdk`(or whichever current version of XCode you're using).
@@ -132,5 +132,5 @@ Furthermore, it's important to know where your `fftw3` library was installed to.
 Now, run
 
 ```matlab
->>> setup
+>> setup
 ```
