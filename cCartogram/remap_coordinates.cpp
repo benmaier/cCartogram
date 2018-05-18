@@ -64,7 +64,7 @@ vector < pair < double, double > >
 
   vector < pair < double, double > > result;
 
-  for(int i = 0; i < coordinates.size(); i++)
+  for(unsigned int i = 0; i < coordinates.size(); i++)
   {
     double xin = coordinates[i].first;
     double yin = coordinates[i].second;
