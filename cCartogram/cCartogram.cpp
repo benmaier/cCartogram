@@ -32,8 +32,9 @@
 using namespace std;
 namespace py = pybind11;
 
-PYBIND11_PLUGIN(cCartogram) {
-    py::module m("cCartogram", "Module to compute Mark Newman's cartograms.");
+PYBIND11_MODULE(cCartogram, m) {
+
+    m.doc() = "Module to compute Mark Newman's cartograms.";
     
     m.def("compute_cartogram", &compute_cartogram, "Give a matrix (read: list of lists of floats) of density values and return a list of dislocations (x,y).",
             py::arg("density"),
@@ -48,8 +49,4 @@ PYBIND11_PLUGIN(cCartogram) {
             py::arg("xsize"),
             py::arg("ysize")
             );
-
-
-    return m.ptr();
-
 }
