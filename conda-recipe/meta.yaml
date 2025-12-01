@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/benmaier/cCartogram/archive/refs/tags/v{{ version }}.tar.gz
-  # sha256: UPDATE_WITH_ACTUAL_SHA256_AFTER_TAGGING_RELEASE
+  sha256: 6f3d3225577c4a29c951351d004414aed4a6ab113d06d4e4a37dc79d42334d3b
 
 build:
   number: 0
@@ -34,9 +34,8 @@ test:
 
 about:
   home: https://github.com/benmaier/cCartogram
-  license: MIT
-  license_family: MIT
-  license_file: LICENSE
+  license: BSD-3-Clause AND MIT
+  license_file: LICENSING_NOTES.md
   summary: Python wrapper for Mark Newman's density-equalizing cartogram algorithm
   description: |
     cCartogram is a Python wrapper for Mark Newman's C implementation
