@@ -14,8 +14,8 @@ the following files
 * cCartogram/remap_coordinates.cpp
 * sandbox/uspop.dat
 
-All of these files were edited with permission of the original author and
-licensed under the BSD license with the following original text:
+All of these files are originally licensend under the BSD license with the following text,
+and edit to compile in C++ with permission of the original author.
 
 ```
 cart2.c, cart2v.c, cart.c, cart.h, cartv.c, interp.c, main.c: C code
