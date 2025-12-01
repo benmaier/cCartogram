@@ -38,8 +38,8 @@ use_sinus = True
 if use_sinus:
 
     # put twodimensional sinus function in a matrix
-    smallA = np.ones((xsize/2,ysize/2))
-    halfsize = xsize/2
+    smallA = np.ones((xsize//2,ysize//2))
+    halfsize = xsize//2
     for i in range(halfsize):
         for j in range(halfsize):
             smallA[i,j] = 2+np.sin(i/float(halfsize)*2*np.pi) *\
@@ -48,7 +48,7 @@ if use_sinus:
     # but bigger matrix with mean value of A around it
     mean_A = smallA.mean()
     bigA = mean_A * np.ones((xsize,ysize))
-    bigA[xsize/4:3*xsize/4,ysize/4:3*ysize/4] = smallA
+    bigA[xsize//4:3*xsize//4,ysize//4:3*ysize//4] = smallA
 
 else:
     # generate four blocks of random values
@@ -57,7 +57,7 @@ else:
     # get big matrix containing their mean
     mean_A = vals.mean()
     bigA = mean_A * np.ones((xsize,ysize))
-    quartersize = xsize/4
+    quartersize = xsize//4
 
     # put the blocks in the big matrix
     for i in range(2):
@@ -68,7 +68,7 @@ else:
 
                 
 # compute coordinates for lattice lines
-quartersize = xsize/4
+quartersize = xsize//4
 incre_coord = np.linspace(quartersize,3.*quartersize,100)
 const_coord = quartersize * np.ones_like(incre_coord)
 
@@ -90,7 +90,7 @@ cartogram = cart.compute_cartogram(bigA.tolist(),offset=0.005,blur=5,show_progre
 
 # transform lines according to cartogram
 for x,y in lines:
-    coo = zip(x,y)
+    coo = list(zip(x,y))
     coords = cart.remap_coordinates(coo,cartogram,xsize,ysize)
     x = [c[0] for c in coords]
     y = [c[1] for c in coords]
