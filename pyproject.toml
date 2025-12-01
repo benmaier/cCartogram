@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61", "pybind11>=2.10"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cCartogram"
+version = "0.0.2"
+description = "Python wrapper for Mark Newman's density-equalizing cartogram algorithm"
+readme = "README.md"
+license = "BSD-3-Clause AND MIT"
+authors = [
+    {name = "Mark Newman"},
+    {name = "Benjamin F. Maier", email = "contact@benmaier.org"}
+]
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: C++",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+
+[project.urls]
+Homepage = "https://github.com/benmaier/cCartogram"
+Repository = "https://github.com/benmaier/cCartogram"
+
+[tool.setuptools]
+packages = []
