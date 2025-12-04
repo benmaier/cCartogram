@@ -3,11 +3,17 @@
 Python and MATLAB wrappers for Mark Newman's C implementation of density-equalizing cartograms
 using the diffusion method by [Gastner and Newman (2004)](https://doi.org/10.1073/pnas.0400280101).
 
+<p align="center">
+  <img src="sandbox/sinus.png" alt="Cartogram transformation example" width="700">
+</p>
+
 Cartograms are map projections where geographic regions are rescaled according to
 some variable (e.g., population density), distorting the geometry while preserving
 topology.
 
 For more details, see the [original code website](http://www-personal.umich.edu/~mejn/cart/).
+
+**Looking for a higher-level interface?** Check out [pycartogram](https://github.com/benmaier/pycartogram) for a more user-friendly Python API with detailed documentation and examples.
 
 ---
 
