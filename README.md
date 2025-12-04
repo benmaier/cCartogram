@@ -15,24 +15,49 @@ For more details, see the [original code website](http://www-personal.umich.edu/
 
 ### Installation
 
-#### Using conda (recommended)
-
-```bash
-conda install -c conda-forge ccartogram
-```
-
-#### Using pip
+> **Note:** cCartogram is not yet available on PyPI or conda-forge. Install from GitHub for now.
 
 First install the FFTW3 library:
 
 - **macOS**: `brew install fftw`
 - **Ubuntu/Debian**: `sudo apt install libfftw3-dev`
 - **Fedora**: `sudo dnf install fftw-devel`
+- **conda**: `conda install -c conda-forge fftw`
 
-Then install the package:
+Then install the package from GitHub:
 
 ```bash
-pip install cCartogram
+pip install git+https://github.com/benmaier/cCartogram.git
+```
+
+#### Troubleshooting: macOS LC_RPATH Error
+
+If you encounter an error like:
+
+```
+ImportError: dlopen(.../cCartogram.cpython-312-darwin.so...): tried: '...' (duplicate LC_RPATH '/some/path/lib')
+```
+
+This happens when the compiled library contains duplicate rpath entries. Fix it using `install_name_tool`:
+
+```bash
+# The .so file path is shown in the error message. Use it directly:
+install_name_tool -delete_rpath '/the/duplicate/path/from/error' '/path/to/cCartogram.cpython-312-darwin.so'
+
+# Example:
+install_name_tool -delete_rpath '/Users/you/miniconda3/lib' '/Users/you/miniconda3/lib/python3.12/site-packages/cCartogram.cpython-312-darwin.so'
+```
+
+You can verify the fix worked by checking the rpaths:
+
+```bash
+otool -l /path/to/cCartogram.cpython-312-darwin.so | grep -A2 LC_RPATH
+```
+
+Alternatively, reinstall from source:
+
+```bash
+pip install --force-reinstall git+https://github.com/benmaier/cCartogram.git
 ```
 
 ### Quick Start
