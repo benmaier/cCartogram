@@ -25,12 +25,18 @@ import numpy as np
 import cCartogram as cart
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
+from scipy.ndimage import zoom
 
 # load transposed data from file
-A = np.loadtxt('uspop.dat').T
-print(f"Data shape: {A.shape}")
+A_orig = np.loadtxt('uspop.dat').T
+print(f"Original data shape: {A_orig.shape}")
 
-# Create coordinates for every point in the original matrix
+# Upsample density matrix by 2x using nearest neighbor (no smearing)
+scale_factor = 2
+A = zoom(A_orig, scale_factor, order=0)  # order=0 is nearest neighbor
+print(f"Upsampled data shape: {A.shape}")
+
+# Create coordinates for every point in the upsampled matrix
 rows, cols = A.shape
 x_orig = []
 y_orig = []
@@ -38,26 +44,31 @@ colors = []
 
 for i in range(rows):
     for j in range(cols):
-        x_orig.append(float(i))
-        y_orig.append(float(j))
+        # Scale coordinates back to original space for consistent visualization
+        x_orig.append(float(i) / scale_factor)
+        y_orig.append(float(j) / scale_factor)
         colors.append(A[i, j])
 
-coordinates = list(zip(x_orig, y_orig))
+coordinates_for_remap = list(zip(
+    [float(i) for i in range(rows) for j in range(cols)],
+    [float(j) for i in range(rows) for j in range(cols)]
+))
 colors = np.array(colors)
 
 # Use log scale for colors and normalize
 log_colors = np.log(colors + 1)  # +1 to avoid log(0)
 log_colors_norm = (log_colors - log_colors.min()) / (log_colors.max() - log_colors.min())
 
-# compute cartogram
+# compute cartogram on upsampled data
 print("computing cartogram ...")
 cartogram = cart.compute_cartogram(A.tolist(), show_progress=True)
 
 # remap all coordinates
 print("remapping coordinates ...")
-new_coords = cart.remap_coordinates(coordinates, cartogram, *A.shape)
-x_new = np.array([c[0] for c in new_coords])
-y_new = np.array([c[1] for c in new_coords])
+new_coords = cart.remap_coordinates(coordinates_for_remap, cartogram, *A.shape)
+# Scale back to original coordinate space
+x_new = np.array([c[0] / scale_factor for c in new_coords])
+y_new = np.array([c[1] / scale_factor for c in new_coords])
 
 # Create a filled image for the cartogram using nearest-neighbor interpolation
 print("interpolating cartogram image ...")
