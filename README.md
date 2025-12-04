@@ -4,7 +4,7 @@ Python and MATLAB wrappers for Mark Newman's C implementation of density-equaliz
 using the diffusion method by [Gastner and Newman (2004)](https://doi.org/10.1073/pnas.0400280101).
 
 <p align="center">
-  <img src="sandbox/sinus.png" alt="Cartogram transformation example" width="700">
+  <img src="uspop_cartogram.png" alt="US population cartogram example">
 </p>
 
 Cartograms are map projections where geographic regions are rescaled according to

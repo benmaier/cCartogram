@@ -25,18 +25,15 @@ import numpy as np
 import cCartogram as cart
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
-from scipy.ndimage import zoom
 
 # load transposed data from file
 A_orig = np.loadtxt('uspop.dat').T
 print(f"Original data shape: {A_orig.shape}")
 
-# Upsample density matrix by 2x using nearest neighbor (no smearing)
-scale_factor = 2
-A = zoom(A_orig, scale_factor, order=0)  # order=0 is nearest neighbor
-print(f"Upsampled data shape: {A.shape}")
+A = A_orig
+print(f"Data shape: {A.shape}")
 
-# Create coordinates for every point in the upsampled matrix
+# Create coordinates for every point in the matrix
 rows, cols = A.shape
 x_orig = []
 y_orig = []
@@ -44,31 +41,26 @@ colors = []
 
 for i in range(rows):
     for j in range(cols):
-        # Scale coordinates back to original space for consistent visualization
-        x_orig.append(float(i) / scale_factor)
-        y_orig.append(float(j) / scale_factor)
+        x_orig.append(float(i))
+        y_orig.append(float(j))
         colors.append(A[i, j])
 
-coordinates_for_remap = list(zip(
-    [float(i) for i in range(rows) for j in range(cols)],
-    [float(j) for i in range(rows) for j in range(cols)]
-))
+coordinates = list(zip(x_orig, y_orig))
 colors = np.array(colors)
 
 # Use log scale for colors and normalize
 log_colors = np.log(colors + 1)  # +1 to avoid log(0)
 log_colors_norm = (log_colors - log_colors.min()) / (log_colors.max() - log_colors.min())
 
-# compute cartogram on upsampled data
+# compute cartogram
 print("computing cartogram ...")
 cartogram = cart.compute_cartogram(A.tolist(), show_progress=True)
 
 # remap all coordinates
 print("remapping coordinates ...")
-new_coords = cart.remap_coordinates(coordinates_for_remap, cartogram, *A.shape)
-# Scale back to original coordinate space
-x_new = np.array([c[0] / scale_factor for c in new_coords])
-y_new = np.array([c[1] / scale_factor for c in new_coords])
+new_coords = cart.remap_coordinates(coordinates, cartogram, *A.shape)
+x_new = np.array([c[0] for c in new_coords])
+y_new = np.array([c[1] for c in new_coords])
 
 # Create a filled image for the cartogram using nearest-neighbor interpolation
 print("interpolating cartogram image ...")
@@ -96,7 +88,7 @@ orig_grid_colors = griddata(
 )
 
 # Zoom bounds for the US region (same for both plots)
-xmin, xmax = 180, 820
+xmin, xmax = 330, 690
 ymin, ymax = 160, 375
 
 # Create figure with prettier styling - dark background
@@ -106,18 +98,80 @@ fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 # Use a beautiful colormap
 cmap = plt.cm.magma
 
+# Use contour to get connected boundary lines for each unique density value
+print("extracting boundary contours ...")
+unique_vals = np.unique(A)
+from matplotlib.path import Path
+
+# Collect all contour path segments from original (split at MOVETO commands)
+all_segments_orig = []  # list of continuous line segments
+for val in unique_vals:
+    mask = (A == val).astype(float)
+    fig_tmp, ax_tmp = plt.subplots()
+    cs = ax_tmp.contour(mask.T, levels=[0.5])
+    plt.close(fig_tmp)
+    # Extract paths and split at MOVETO commands
+    for path in cs.get_paths():
+        vertices = path.vertices
+        codes = path.codes
+        if codes is None:
+            # No codes means single continuous path
+            all_segments_orig.append(vertices.tolist())
+        else:
+            # Split at MOVETO (code 1)
+            current_segment = []
+            for v, c in zip(vertices, codes):
+                if c == Path.MOVETO and current_segment:
+                    all_segments_orig.append(current_segment)
+                    current_segment = []
+                current_segment.append(v.tolist())
+            if current_segment:
+                all_segments_orig.append(current_segment)
+
+# Flatten all segment vertices for transformation
+all_contour_coords_orig = []
+segment_lengths = []
+for seg in all_segments_orig:
+    segment_lengths.append(len(seg))
+    for v in seg:
+        all_contour_coords_orig.append((v[0], v[1]))
+
+# Transform contour coordinates through cartogram
+print("transforming contour coordinates ...")
+contour_coords_new = cart.remap_coordinates(all_contour_coords_orig, cartogram, *A.shape)
+
+# Rebuild segments from transformed coordinates
+all_segments_new = []
+idx = 0
+for length in segment_lengths:
+    seg_new = []
+    for i in range(length):
+        seg_new.append(contour_coords_new[idx])
+        idx += 1
+    all_segments_new.append(seg_new)
+
 # Plot original (left) as filled image
 ax1 = axes[0]
 im1 = ax1.imshow(orig_grid_colors.T, origin='lower', cmap=cmap,
                   extent=[orig_x.min(), orig_x.max(), orig_y.min(), orig_y.max()], aspect='equal')
+# Draw contours on original - use contour directly
+for val in unique_vals:
+    mask = (A == val).astype(float)
+    ax1.contour(mask.T, levels=[0.5], colors='white', linewidths=0.5,
+                extent=[0, A.shape[0], 0, A.shape[1]], origin='lower')
 ax1.set_xlim(xmin, xmax)
 ax1.set_ylim(ymax, ymin)  # flip y-axis
 ax1.set_title('Original Geography', fontsize=16, fontweight='bold', color='white', pad=10)
 
-# Plot transformed (right) as filled image
+# Plot transformed (right) as filled image with transformed contours as lines
 ax2 = axes[1]
 im2 = ax2.imshow(grid_colors.T, origin='lower', cmap=cmap,
                   extent=[x_new.min(), x_new.max(), y_new.min(), y_new.max()], aspect='equal')
+# Draw each transformed segment as a connected line
+for seg in all_segments_new:
+    px = [p[0] for p in seg]
+    py = [p[1] for p in seg]
+    ax2.plot(px, py, '-', linewidth=0.5, color='white', alpha=0.8)
 ax2.set_xlim(xmin, xmax)
 ax2.set_ylim(ymax, ymin)  # flip y-axis
 ax2.set_title('Population Cartogram', fontsize=16, fontweight='bold', color='white', pad=10)
